@@ -49,8 +49,13 @@ func (service *IntelligenceService) ProcessRequest(
 		return service.DefaultResult, nil
 	}
 
-	labelDict := service.MistApi
-	return labelDict, nil
+	labelDict, err := service.MistApi.GetLabel(chainName, address)
+	if err != nil {
+		// return nil, fmt.Errorf("failed to send request: %v", err)
+		return labelDict, nil
+	}
+	return labelDict, err
+	// return labelDict, nil
 }
 
 func contains(slice []string, str string) bool {

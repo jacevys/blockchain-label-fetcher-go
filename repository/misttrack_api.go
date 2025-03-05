@@ -87,69 +87,6 @@ func (m *MisttrackApi) GetLabel(chainName string, address string) (map[string]in
 	return nil, fmt.Errorf("API error: %v", result["msg"])
 }
 
-// func (m *MisttrackApi) GetLabel(chainName string, address string) (map[string]interface{}, error) {
-// 	url := "https://openapi.misttrack.io/v1/address_labels"
-// 	payload := map[string]interface{}{
-// 		"coin":    m.Mapping[chainName],
-// 		"address": address,
-// 		"api_key": m.ApiKey,
-// 	}
-// 	fmt.Println(payload)
-// 	payloadBytes, err := json.Marshal(payload)
-// 	fmt.Println("Payload:", string(payloadBytes))
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to marshal payload: %v", err)
-// 	}
-
-// 	req, err := http.NewRequest("GET", url, bytes.NewBuffer(payloadBytes))
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to create request: %v", err)
-// 	}
-// 	req.Header.Set("Content-type", "application/json")
-
-// 	resp, err := m.Client.Do(req)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to send request: %v", err)
-// 	}
-// 	defer resp.Body.Close()
-
-// 	if resp.StatusCode != http.StatusOK {
-// 		body, _ := io.ReadAll(resp.Body)
-// 		return nil, fmt.Errorf("received non-OK status: %d, body: %s", resp.StatusCode, string(body))
-// 	}
-
-// 	var result map[string]interface{}
-// 	err = json.NewDecoder(resp.Body).Decode(&result)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to decode response: %v", err)
-// 	}
-// 	// fmt.Println(result)
-// 	fmt.Println("Result:", result)
-// 	if success, ok := result["success"].(bool); ok && success {
-// 		data := result["data"].(map[string]interface{})
-// 		labelType := "Unknown"
-// 		if lt, ok := data["label_type"].(string); ok && lt != "" {
-// 			labelType = lt
-// 		}
-// 		labelList := data["label_list"].([]interface{})
-// 		labelName := "Unknown"
-// 		if len(labelList) > 0 {
-// 			labelName = labelList[0].(string)
-// 		}
-// 		label := map[string]interface{}{
-// 			"type":   labelType,
-// 			"name":   labelName,
-// 			"labels": labelList,
-// 		}
-// 		if labelType == "exchange" && contains(labelList, "deposit") {
-// 			label["type"] = "Deposit"
-// 		}
-// 		return label, nil
-// 	} else {
-// 		return m.DefaultRsult[0], nil
-// 	}
-// }
-
 func contains(slice []interface{}, item string) bool {
 	for _, v := range slice {
 		if str, ok := v.(string); ok && str == item {
